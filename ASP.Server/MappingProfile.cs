@@ -12,9 +12,14 @@ namespace ASP.Server
     {
         public MappingProfile()
         {
-            // Rajouter autant de ligne ici que vous avez de mapping Model <-> DTO
-            // https://docs.automapper.org/en/latest/
-            CreateMap<Book, BookDto>();
+            // Mappage existant
+            CreateMap<Book, BookDto>()
+                .ForMember(dest => dest.Genres,
+                           opt => opt.MapFrom(src => src.Genres.Select(g => g.Name))); // Assumant que Genre a une propriété Name
+
+            // Ajoutez ici d'autres mappages si nécessaire
+            // Par exemple, si vous créez un GenreDto et souhaitez l'utiliser pour une représentation plus détaillée des genres:
+            // CreateMap<Genre, GenreDto>();
         }
     }
 }
