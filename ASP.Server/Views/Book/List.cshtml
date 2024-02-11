@@ -3,12 +3,46 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    main{
+        margin:100px;
+    }
+    .book-details{
+        border: solid;
+        padding: 10px;
+        margin:10px;
+    }
+</style>
 
 <div class="listeBooks">
     <h1>Liste des livres:</h1>
     <!-- la liste des genres est dans la variable Model qui est typé en ligne 3, elle correspond à la variable xxx dans View(xxx) du controller -->
     @foreach (var book in Model)
     {
+        <main>
+           <div class="book-details">
+               <h2>@book.Title</h2>
+               <p>Auteur: @book.Author</p>
+               <p>Prix: @book.Price</p>
+               <p>Genres: @string.Join(", ", book.Genres.Select(g => g.Name))</p>
+  
+                
+                <div>
+                    <form asp-controller="Book" asp-action="Delete" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="@book.Id" />
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+
+                    <form asp-controller="Book" asp-action="Edit" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="@book.Id" />
+                        <button type="submit" class="btn btn-primary">modifier</button>
+                    </form>
+
+                    
+                </div>
+           </div>
+
+        </main>
     }
 </div>
 
